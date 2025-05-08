@@ -5,8 +5,9 @@
 int main() {
     pthread_t process_thread, memory_thread;
 
-    pthread_create(&process_thread, NULL, process_task, NULL);
-    pthread_create(&memory_thread, NULL, memory_task, NULL);
+    pthread_create(&process_thread_1, NULL, process_task, NULL);
+    while()
+    pthread_create(&process_thread_2, NULL, process_task, NULL);
 
     pthread_join(process_thread, NULL);
     pthread_join(memory_thread, NULL);
