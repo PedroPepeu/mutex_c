@@ -1,34 +1,32 @@
-# Compiler
+# Makefile
+
+# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -pthread
+CFLAGS = -Wall -Wextra -O2 -I.
 
-# Directories
-BUILD_DIR = build
-
-# Source files
-SRCS = main.c process.c memory.c
-
-# Object files
-OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
-
-# Output executable
-TARGET = program
+# Source files and object output
+SRC = main.c logic.c
+OBJ = $(SRC:%.c=build/%.o)
+TARGET = bank_sim
 
 # Default target
 all: $(TARGET)
 
-# Link object files into the final binary
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Link final executable
+$(TARGET): $(OBJ)
+	$(CC) $(OBJ) -o $@ -lpthread
 
-# Compile source files into build/*.o
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+# Compile source files to /build directory
+build/%.o: %.c | build
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Ensure build directory exists
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# Create build directory if it doesn't exist
+build:
+	mkdir -p build
 
-# Clean up object files and executable
+# Clean build files
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf build $(TARGET)
+
+# Phony targets
+.PHONY: all clean build
