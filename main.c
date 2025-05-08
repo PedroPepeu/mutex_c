@@ -24,15 +24,15 @@ int main() {
     pthread_t threads[NUM_THREADS];
     int ids[NUM_THREADS];
 
-    init_account();
+    init_account(); // Prepare the mutex
 
     for (int i = 0; i < NUM_THREADS; ++i) {
         ids[i] = i;
-        pthread_create(&threads[i], NULL, thread_routine, &ids[i]);
+        pthread_create(&threads[i], NULL, thread_routine, &ids[i]); // Create simulation of account movement
     }
 
     for (int i = 0; i < NUM_THREADS; ++i) {
-        pthread_join(threads[i], NULL);
+        pthread_join(threads[i], NULL); // Finish the threads
     }
 
     printf("Final balance: %.2f\n", get_balance());
